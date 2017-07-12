@@ -13,7 +13,7 @@ import { DataGridModule } from 'primeng/components/datagrid/datagrid';
 import { OnlyDigitsDecimal } from './only-digits-decimal.directive';
 import { CompleterService, CompleterData, CompleterCmp } from 'ng2-completer';
 import { City } from './city';
-import { TypeaheadModule, TypeaheadContainerComponent, TypeaheadDirective, TypeaheadMatch } from 'ngx-bootstrap';
+import { TypeaheadMatch } from 'ngx-bootstrap';
 
 @Component({
   selector: 'app',
@@ -50,8 +50,7 @@ export class App2Component {
   @ViewChild('saveModal') saveModal: Modal;
   @ViewChild('revertModal') revertModal: Modal;
   @ViewChild('citySelect') citySelect: CompleterCmp;
-  @ViewChild('cityTypeahead') cityTypeahead: TypeaheadContainerComponent;
-  
+    
   value: number;
   protected dataService: CompleterData;
 
