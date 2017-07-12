@@ -2,6 +2,15 @@
   <div>
     <button class="btn btn-outline-primary" (click)="getServiceData()">Load profile</button>
   </div>  
+  <alert type="success">hello</alert>
+  <pre class="card card-block card-header">Model: {{selected | json}}</pre>
+  <pre class="card card-block card-header">Model: {{selectedId | json}}</pre>
+  <input #cityTypeahead [(ngModel)]="selected"
+       [typeahead]="cities"
+       typeaheadOptionField="name"
+       class="form-control typeahead"
+       [typeaheadMinLength]="0"
+       (typeaheadOnSelect)="selectItem($event)"  >
 <div class="row">
   <div class="col">
     <div ngbDropdown class="d-inline-block">

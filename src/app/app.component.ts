@@ -13,6 +13,7 @@ import { DataGridModule } from 'primeng/components/datagrid/datagrid';
 import { OnlyDigitsDecimal } from './only-digits-decimal.directive';
 import { CompleterService, CompleterData, CompleterCmp } from 'ng2-completer';
 import { City } from './city';
+import { TypeaheadModule, TypeaheadContainerComponent, TypeaheadDirective, TypeaheadMatch } from 'ngx-bootstrap';
 
 @Component({
   selector: 'app',
@@ -40,6 +41,8 @@ export class App2Component {
     this._cityName = value;
     this._cityId = this.cities.find(c => c.name == value) ? this.cities.find(c => c.name == value).id : null;
   };
+  selected:any;
+  selectedId:number;
 
   closed: boolean = false;
   @ViewChild('flex') flex: WjFlexGrid;
@@ -47,6 +50,7 @@ export class App2Component {
   @ViewChild('saveModal') saveModal: Modal;
   @ViewChild('revertModal') revertModal: Modal;
   @ViewChild('citySelect') citySelect: CompleterCmp;
+  @ViewChild('cityTypeahead') cityTypeahead: TypeaheadContainerComponent;
   
   value: number;
   protected dataService: CompleterData;
@@ -55,7 +59,10 @@ export class App2Component {
     private completerService: CompleterService) {
     //[{'test':'test column value'}]
     this.cityData = [{ 'city': 'Geelong' }];
-    this.cities = [new City({ 'id': 1, 'name': 'Brisbane' }), new City({ 'id': 2, 'name': 'Gold Coast' }), new City({ 'id': 2, 'name': 'Sydney' })]
+    this.cities = [new City({ 'id': 1, 'name': 'Brisbane' }), new City({ 'id': 2, 'name': 'Gold Coast' }), new City({ 'id': 3, 'name': 'Sydney' }),
+      new City({ 'id': 4, 'name': 'Brisbane' }), new City({ 'id': 5, 'name': 'Gold Coast' }), new City({ 'id': 6, 'name': 'Sydney' }),
+      new City({ 'id': 7, 'name': 'Brisbane' }), new City({ 'id': 8, 'name': 'Gold Coast' }), new City({ 'id': 9, 'name': 'Sydney' }),
+      new City({ 'id': 10, 'name': 'Brisbane' }), new City({ 'id': 11, 'name': 'Gold Coast' }), new City({ 'id': 12, 'name': 'Sydney' })]
     this.cityId = 2;
     this.dataService = completerService.local(this.cities, 'name', 'name');
     this.citiesFiltered = this.cities.filter(c => true);
@@ -64,6 +71,7 @@ export class App2Component {
       value: ['', Validators.required], // <--- the FormControl called "name"
       cityName: ['', Validators.required], // <--- the FormControl called "name"
     });
+    
   }
 
   getServiceData() {
@@ -86,7 +94,11 @@ export class App2Component {
   }
 
   revert() {
-    this.revertModal.open();
+    //this.revertModal.open();
+  }
+
+  private selectItem(e: TypeaheadMatch) {
+    this.selectedId = e.item.id
   }
 
   private openCitySelect(): void
@@ -100,3 +112,4 @@ export class App2Component {
     this.citySelect.close();
   }
 }
+

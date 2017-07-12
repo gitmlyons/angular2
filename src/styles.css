@@ -5,10 +5,16 @@
 @import "../node_modules/primeng/resources/themes/omega/theme.css";
 @import "../node_modules/primeng/resources/primeng.min.css";
 
-.completer-dropdown { width:95% !important; overflow-y: scroll; overflow-x: hidden; 
-} 
 
-.completer-input {
+.dropdown { 
+    width:100% !important;
+}
+
+.dropdown-menu{ 
+    width:100% !important; overflow-y: scroll !important; height: 300px !important;
+}
+
+.typeahead {
     background: url(assets/download.png) no-repeat scroll 7px 7px;
     padding-right:20px;     
     background-size: 15px 20px;       

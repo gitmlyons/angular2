@@ -16,6 +16,8 @@ import { App2Component } from './app.component';
 import { ErrComponent } from './err.component';
 import { BackendApiService } from './backend-api.service';
 import { Ng2CompleterModule } from "ng2-completer";
+import { AlertModule } from 'ngx-bootstrap';
+import { TypeaheadModule } from 'ngx-bootstrap';
 
 const appRoutes: Routes = [
   { path: 'cities', component: App2Component },
@@ -40,6 +42,7 @@ const appRoutes: Routes = [
     ErrComponent
   ],
   imports: [
+    TypeaheadModule.forRoot(),
     BrowserModule,
     FormsModule,
     HttpModule,    
@@ -50,7 +53,8 @@ const appRoutes: Routes = [
     DataGridModule,
     ReactiveFormsModule,
     ModalModule,
-    Ng2CompleterModule
+    Ng2CompleterModule,
+    AlertModule.forRoot()
   ],
   providers: [BackendApiService],
   bootstrap: [AppComponent]
