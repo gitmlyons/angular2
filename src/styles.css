@@ -6,11 +6,11 @@
 @import "../node_modules/primeng/resources/primeng.min.css";
 
 
-.dropdown { 
+typeahead-container.dropdown {
     width:100% !important;
 }
 
-.dropdown-menu{ 
+typeahead-container > ul.dropdown-menu { 
     width:100% !important; overflow-y: scroll !important; height: 300px !important;
 }
 
