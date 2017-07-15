@@ -21,6 +21,13 @@ typeahead-container > ul.dropdown-menu {
     background-position:right;
 }
    
+.mat-input-select {
+    background: url(assets/download.png) no-repeat scroll 7px 7px;
+    padding-right:20px;     
+    background-size: 15px 20px;       
+    background-position:right;
+}
+
 .mat-input-underline {    
   color:white !important;
   background-color:white !important;
@@ -31,6 +38,14 @@ typeahead-container > ul.dropdown-menu {
   background-color:white !important;
 }
 
-.smat-option {
-  background-color:lightgrey !important;
+.mat-option {
+  height: inherit !important;
+  line-height: inherit !important;
+  font-family: inherit !important;
+  font-size: inherit !important;
+}
+
+.mat-option:hover { 
+    background-color: steelblue !important;
+    color: white !important;
 }

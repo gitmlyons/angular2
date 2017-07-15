@@ -1,26 +1,35 @@
 <form [formGroup]="heroForm" (ngSubmit)="onSubmit()" novalidate>  
-<md-input-container style="width:100%">
-   <input class="form-control" mdInput [(ngModel)]="currentCity.id" type="text" [disabled]="false" (click)="openPanel()" (focus)="filteredCities = filterCities(currentCity.id)" 
-   [ngModelOptions]="{standalone: true}" (ngModelChange)="filteredCities = filterCities(currentCity.id)" [mdAutocomplete]="cityComplete" (blur)="cityCompleteBlur()" [ngClass]="{'mat-input-element': false}">
-</md-input-container>
+
+<input class="form-control mat-input-select" mdInput [(ngModel)]="currentCity.id" type="text" [disabled]="false" (click)="openPanel()" (focus)="filteredCities = filterCities(currentCity.id)" 
+[ngModelOptions]="{standalone: true}" (ngModelChange)="filteredCities = filterCities(currentCity.id)" [mdAutocomplete]="cityComplete" (blur)="cityCompleteBlur()" [ngClass]="{'mat-input-element': false}">
 <md-autocomplete md-autocomplete-trigger #cityComplete [displayWith]="cityCompleteDisplay.bind(this)">
    <md-option *ngFor="let city of filteredCities" [value]="city.id" (onSelectionChange)="onCitySelect(city, $event)">
       {{ city.name }}
    </md-option>
 </md-autocomplete>
-
-<md-input-container style="width:100%">
-   <input class="form-control" mdInput [(ngModel)]="currentCity2.id" type="text" [disabled]="false" (click)="openPanel2()" (focus)="filteredCities2 = filterCities2(currentCity2.id)" 
-   [ngModelOptions]="{standalone: true}" (ngModelChange)="filteredCities2 = filterCities2(currentCity2.id)" [mdAutocomplete]="cityComplete2" (blur)="cityCompleteBlur2()" [ngClass]="{'mat-input-element': false}">
-</md-input-container>
+<input class="form-control mat-input-select" mdInput [(ngModel)]="currentCity2.id" type="text" [disabled]="false" (click)="openPanel2()" (focus)="filteredCities2 = filterCities2(currentCity2.id)" 
+[ngModelOptions]="{standalone: true}" (ngModelChange)="filteredCities2 = filterCities2(currentCity2.id)" [mdAutocomplete]="cityComplete2" (blur)="cityCompleteBlur2()" [ngClass]="{'mat-input-element': false}">
 <md-autocomplete md-autocomplete-trigger #cityComplete2 [displayWith]="cityCompleteDisplay2.bind(this)">
    <md-option *ngFor="let city of filteredCities2" [value]="city.id" (onSelectionChange)="onCitySelect2(city, $event)">
       {{ city.name }}
    </md-option>
 </md-autocomplete>
 </form>
-   
 <input type="text" style="width:100%" class="form-control">
+<select class="form-control">
+  <option>Brisbane</option>
+  <option>Gold Coast</option>
+  <option>Sydney</option>
+  <option>Brisbane</option>
+  <option>Gold Coast</option>
+  <option>Sydney</option>
+  <option>Brisbane</option>
+  <option>Gold Coast</option>
+  <option>Sydney</option>
+  <option>Brisbane</option>
+  <option>Gold Coast</option>
+  <option>Sydney</option>  
+</select>
 
 <p>Form value: {{ heroForm.value | json }}</p>
 <p>Form status: {{ heroForm.status | json }}</p>
