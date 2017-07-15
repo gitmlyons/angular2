@@ -4,13 +4,13 @@
 @import "../node_modules/font-awesome/css/font-awesome.min.css";
 @import "../node_modules/primeng/resources/themes/omega/theme.css";
 @import "../node_modules/primeng/resources/primeng.min.css";
-
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
 typeahead-container.dropdown {
     width:100% !important;
 }
 
-typeahead-container > ul.dropdown-menu { 
+typeahead-container > ul.dropdown-menu {  
     width:100% !important; overflow-y: scroll !important; height: 300px !important;
 }
 
@@ -21,4 +21,16 @@ typeahead-container > ul.dropdown-menu {
     background-position:right;
 }
    
+.mat-input-underline {    
+  color:white !important;
+  background-color:white !important;
+}
 
+.mat-input-ripple {
+  color:white !important;
+  background-color:white !important;
+}
+
+.smat-option {
+  background-color:lightgrey !important;
+}

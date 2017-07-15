@@ -18,6 +18,9 @@ import { BackendApiService } from './backend-api.service';
 import { Ng2CompleterModule } from "ng2-completer";
 import { AlertModule } from 'ngx-bootstrap';
 import { TypeaheadModule } from 'ngx-bootstrap';
+import { TypeaheadDirectiveExtended } from './typeahead-extended.directive';
+import {MdAutocompleteModule, MdInputModule} from '@angular/material';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 const appRoutes: Routes = [
   { path: 'cities', component: App2Component },
@@ -39,7 +42,8 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     App2Component,
-    ErrComponent
+    ErrComponent,
+    TypeaheadDirectiveExtended
   ],
   imports: [
     TypeaheadModule.forRoot(),
@@ -54,7 +58,10 @@ const appRoutes: Routes = [
     ReactiveFormsModule,
     ModalModule,
     Ng2CompleterModule,
-    AlertModule.forRoot()
+    AlertModule.forRoot(),
+    MdAutocompleteModule,
+    NoopAnimationsModule,
+    MdInputModule 
   ],
   providers: [BackendApiService],
   bootstrap: [AppComponent]

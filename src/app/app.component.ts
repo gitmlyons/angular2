@@ -1,19 +1,9 @@
-import { Component, ViewChild } from '@angular/core';
-import { BackendApiService } from './backend-api.service';
+import { Component, ViewChildren, QueryList } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Modal } from "ngx-modal";
-import { Observable } from 'rxjs/Observable';
-
-import { WjGridModule, WjFlexGrid } from 'wijmo/wijmo.angular2.grid';
-import { DataMap } from 'wijmo/wijmo.grid';
-import { DataGridModule } from 'primeng/components/datagrid/datagrid';
-
-import { OnlyDigitsDecimal } from './only-digits-decimal.directive';
-import { CompleterService, CompleterData, CompleterCmp } from 'ng2-completer';
 import { City } from './city';
-import { TypeaheadMatch } from 'ngx-bootstrap';
+import { MdOptionSelectionChange, MdAutocomplete, MdAutocompleteTrigger } from '@angular/material';
 
 @Component({
   selector: 'app',
@@ -21,94 +11,82 @@ import { TypeaheadMatch } from 'ngx-bootstrap';
   styleUrls: ['./app.component.css']
 })
 export class App2Component {
-  title: string;
   cities: City[];
+  currentCity: City = new City();
   citiesFiltered: any[];
-  citiesObservable: Observable<string[]>;
-  cityData: any[];
-  data: any[];
-  cityMap: DataMap;
-  //at time of writing ng-completer does not have a way to return bind to non display property
-  _cityId: number;
-  get cityId(): number { return this._cityId; }
-  set cityId(value: number) {
-    this._cityId = value;
-    this._cityName = this.cities.find(c => c.id == value) ? this.cities.find(c => c.id == value).name : null;
-  };
-  _cityName: string;
-  get cityName(): string { return this._cityName; }
-  set cityName(value: string) {
-    this._cityName = value;
-    this._cityId = this.cities.find(c => c.name == value) ? this.cities.find(c => c.name == value).id : null;
-  };
-  selected:any;
-  selectedId:number;
 
-  closed: boolean = false;
-  @ViewChild('flex') flex: WjFlexGrid;
+  cities2: City[];
+  currentCity2: City = new City();
+  citiesFiltered2: any[];
+
   heroForm: FormGroup;
-  @ViewChild('saveModal') saveModal: Modal;
-  @ViewChild('revertModal') revertModal: Modal;
-  @ViewChild('citySelect') citySelect: CompleterCmp;
-    
-  value: number;
-  protected dataService: CompleterData;
+  @ViewChildren(MdAutocompleteTrigger) completers:QueryList<MdAutocompleteTrigger>;
 
-  constructor(private backendApiService: BackendApiService, private fb: FormBuilder,
-    private completerService: CompleterService) {
-    //[{'test':'test column value'}]
-    this.cityData = [{ 'city': 'Geelong' }];
+  constructor(private fb: FormBuilder) {
     this.cities = [new City({ 'id': 1, 'name': 'Brisbane' }), new City({ 'id': 2, 'name': 'Gold Coast' }), new City({ 'id': 3, 'name': 'Sydney' }),
-      new City({ 'id': 4, 'name': 'Brisbane' }), new City({ 'id': 5, 'name': 'Gold Coast' }), new City({ 'id': 6, 'name': 'Sydney' }),
+      new City({ 'id': 4, 'name': 'Brisbane' }), new City({ 'id': 5, 'name': 'Gold Coasta' }), new City({ 'id': 6, 'name': 'Sydney' }),
       new City({ 'id': 7, 'name': 'Brisbane' }), new City({ 'id': 8, 'name': 'Gold Coast' }), new City({ 'id': 9, 'name': 'Sydney' }),
       new City({ 'id': 10, 'name': 'Brisbane' }), new City({ 'id': 11, 'name': 'Gold Coast' }), new City({ 'id': 12, 'name': 'Sydney' })]
-    this.cityId = 2;
-    this.dataService = completerService.local(this.cities, 'name', 'name');
-    this.citiesFiltered = this.cities.filter(c => true);
+    this.currentCity = new City(this.cities[4]);    
+
+    this.cities2 = [new City({ 'id': 1, 'name': 'Brisbane' }), new City({ 'id': 2, 'name': 'Gold Coast' }), new City({ 'id': 3, 'name': 'Sydney' }),
+      new City({ 'id': 4, 'name': 'Brisbane' }), new City({ 'id': 5, 'name': 'Gold Coasta' }), new City({ 'id': 6, 'name': 'Sydney' }),
+      new City({ 'id': 7, 'name': 'Brisbane' }), new City({ 'id': 8, 'name': 'Gold Coast' }), new City({ 'id': 9, 'name': 'Sydney' }),
+      new City({ 'id': 10, 'name': 'Brisbane' }), new City({ 'id': 11, 'name': 'Gold Coast' }), new City({ 'id': 12, 'name': 'Sydney' })]
+    this.currentCity2 = new City(this.cities[2]);        
+
     this.heroForm = this.fb.group({
-      name: ['', Validators.required], // <--- the FormControl called "name"
-      value: ['', Validators.required], // <--- the FormControl called "name"
-      cityName: ['', Validators.required], // <--- the FormControl called "name"
-    });
-    
+      cityControl: [this.currentCity.id, [Validators.required]],
+      cityControl2: [this.currentCity2.id, [Validators.required]]
+    });            
   }
 
-  getServiceData() {
-
-    this.backendApiService.getServiceData().subscribe(
-      data => {
-      this.title = data.succeeded,
-        this.cities = data.result.map(function (city: string) { return { 'city': city } }),
-        this.cityData = data.result.map(function (city: string) { return { 'city': city } })
-      },
-      error => { this.title = error });
-
-    this.data = this.cities;
-    this.cityMap = new DataMap(this.cityData, 'city', 'city');
-    this.citiesObservable = this.backendApiService.getServiceData2();
+  private filterCities(value: any): City[] {
+      let filter = value ? typeof value == "string" ? value : this.cities.find(c => c.id == value).name  : "";
+      return this.cities.filter(city => new RegExp(`${filter}`, 'gi').test(city.name)); 
   }
 
-  onSubmit() {
-    this.saveModal.open();
+  private openPanel() : void {
+    this.completers.toArray()[0].openPanel(); 
   }
 
-  revert() {
-    //this.revertModal.open();
+  private cityCompleteDisplay(city : number) : string {
+    return city ? this.cities.find(c => c.id == city).name : null;    
   }
 
-  private selectItem(e: TypeaheadMatch) {
-    this.selectedId = e.item.id
+  private onCitySelect(city : City, event : MdOptionSelectionChange) : void {
+    if (event.source.selected) {
+      this.heroForm.get('cityControl').setValue(city.id);
+      this.heroForm.get('cityControl').markAsDirty();
+    }
   }
 
-  private openCitySelect(): void
-  {
-    this.citySelect.open();
-    this.citySelect.focus();
+  private cityCompleteBlur() : void {
+    this.currentCity.id = this.heroForm.get('cityControl').value ? this.heroForm.get('cityControl').value : this.currentCity.id;
   }
 
-  private onCitySelect(): void
-  {
-    this.citySelect.close();
+  private openPanel2() : void {
+    this.completers.toArray()[1].openPanel(); 
+  }
+
+  private filterCities2(value: any): City[] {
+      let filter = value ? typeof value == "string" ? value : this.cities2.find(c => c.id == value).name  : "";
+      return this.cities2.filter(city => new RegExp(`${filter}`, 'gi').test(city.name)); 
+  }
+
+  private cityCompleteDisplay2(city : number) : string {
+    return city ? this.cities2.find(c => c.id == city).name : null;    
+  }
+
+  private onCitySelect2(city : City, event : MdOptionSelectionChange) : void {
+    if (event.source.selected) {
+      this.heroForm.get('cityControl2').setValue(city.id);
+      this.heroForm.get('cityControl2').markAsDirty();
+    }
+  }
+
+  private cityCompleteBlur2() : void {
+    this.currentCity2.id = this.heroForm.get('cityControl2').value ? this.heroForm.get('cityControl2').value : this.currentCity2.id;
   }
 }
 
