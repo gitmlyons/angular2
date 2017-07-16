@@ -5,28 +5,12 @@
 @import "../node_modules/primeng/resources/themes/omega/theme.css";
 @import "../node_modules/primeng/resources/primeng.min.css";
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
-
-typeahead-container.dropdown {
-    width:100% !important;
-}
-
-typeahead-container > ul.dropdown-menu {  
-    width:100% !important; overflow-y: scroll !important; height: 300px !important;
-}
-
-.typeahead {
-    background: url(assets/download.png) no-repeat scroll 7px 7px;
-    padding-right:20px;     
-    background-size: 15px 20px;       
-    background-position:right;
-}
-   
-.mat-input-select {
-    background: url(assets/download.png) no-repeat scroll 7px 7px;
-    padding-right:20px;     
-    background-size: 15px 20px;       
-    background-position:right;
-}
+  
+/*.mat-input-select {
+    background: url(assets/dropdown.png) no-repeat;
+    background-size: 6px 12px;       
+    background-position: right 6px center;
+}*/
 
 .mat-input-underline {    
   color:white !important;
@@ -46,6 +30,16 @@ typeahead-container > ul.dropdown-menu {
 }
 
 .mat-option:hover { 
-    background-color: steelblue !important;
+    background-color: dodgerblue !important;
     color: white !important;
+}
+
+.mat-option.mat-active {
+    background-color: dodgerblue !important;
+    color: white !important;    
+}
+
+.mat-autocomplete-panel.mat-autocomplete-panel-below {   
+   top:0px !important;
+   border: 1px solid dodgerblue !important;   
 }

@@ -7,7 +7,7 @@
       {{ city.name }}
    </md-option>
 </md-autocomplete>
-<input class="form-control mat-input-select" mdInput [(ngModel)]="currentCity2.id" type="text" [disabled]="false" (click)="openPanel2()" (focus)="filteredCities2 = filterCities2(currentCity2.id)" 
+<input class="form-control mat-input-select" mdInput [(ngModel)]="currentCity2.id" type="text" [disabled]="true" (click)="openPanel2()" (focus)="filteredCities2 = filterCities2(currentCity2.id)" 
 [ngModelOptions]="{standalone: true}" (ngModelChange)="filteredCities2 = filterCities2(currentCity2.id)" [mdAutocomplete]="cityComplete2" (blur)="cityCompleteBlur2()" [ngClass]="{'mat-input-element': false}">
 <md-autocomplete md-autocomplete-trigger #cityComplete2 [displayWith]="cityCompleteDisplay2.bind(this)">
    <md-option *ngFor="let city of filteredCities2" [value]="city.id" (onSelectionChange)="onCitySelect2(city, $event)">
